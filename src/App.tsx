@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import { v1 } from 'uuid';
+import {v1} from 'uuid';
 
 export type filterType = "All" | "Active" | "Completed"
 
@@ -13,6 +13,14 @@ function App() {
         {id: v1(), title: "ReactJS", isDone: false},
         {id: v1(), title: "JSX", isDone: false},
     ])
+
+    function changeCheked(id: string, isDone: boolean) {
+        let task = tasks.find(f => f.id === id)
+        if (task) {
+            task.isDone = isDone;
+            setTasks([...tasks])
+        }
+    }
 
     function removeTask(id: string) {
         tasks = tasks.filter(f => f.id !== id);
@@ -41,6 +49,7 @@ function App() {
                       removeTask={removeTask}
                       filter={setFilter}
                       addTask={addTask}
+                      changeCheked={changeCheked}
             />
         </div>
     );
