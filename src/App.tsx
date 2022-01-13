@@ -50,6 +50,7 @@ function App() {
                       filter={setFilter}
                       addTask={addTask}
                       changeCheked={changeCheked}
+                      activeFilter={filter}
             />
         </div>
     );

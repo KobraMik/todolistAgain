@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.error-message {
+  color: red;
+}
+
+.error {
+  border: red solid 3px;
+}
+
+.activeFilter {
+  background-color: darkorange;
+}
