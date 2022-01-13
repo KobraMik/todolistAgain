@@ -19,6 +19,11 @@ function App() {
         setTasks(tasks);
     }
 
+    function addTask(value: string) {
+        let newTask = {id: v1(), title: value, isDone: false};
+        setTasks([newTask, ...tasks])
+    }
+
     let [filter, setFilter] = useState<filterType>('All')
     let newTasks = tasks;
     if (filter === 'Active') {
@@ -35,6 +40,7 @@ function App() {
                       tasks={newTasks}
                       removeTask={removeTask}
                       filter={setFilter}
+                      addTask={addTask}
             />
         </div>
     );

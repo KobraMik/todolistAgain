@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {filterType} from "./App";
 
 type TaskType = {
@@ -12,33 +12,62 @@ type PropsType = {
     tasks: Array<TaskType>
     removeTask: (id: string) => void
     filter: (value: filterType) => void
+    addTask: (titleInput: string) => void
 }
 
-export function Todolist({title, tasks, removeTask, filter, ...props}: PropsType) {
-   function filterTask(value: filterType) {
-       filter(value)
-   }
+export function Todolist({title, tasks, removeTask, filter, addTask, ...props}: PropsType) {
+    function filterTask(value: filterType) {
+        filter(value)
+    }
+
+    let [titleInput, setTitleInput] = useState('');
+
+    function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+        setTitleInput(e.currentTarget.value)
+    }
+
+    function addTaskHandler () {
+        addTask(titleInput)
+        setTitleInput("")
+    }
+
+    function onClickHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        addTaskHandler()
+    }
+
+    function onKeyPressHandler (e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter') {
+            addTaskHandler()
+        }
+    }
+
     return <div>
         <h3>{title}</h3>
         <div>
-            <input/>
-            <button>+</button>
+            <input value={titleInput}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+            />
+            <button onClick={onClickHandler}
+            >+
+            </button>
         </div>
         <ul>
-            {tasks.map(m => <li><input type="checkbox"
-                                       checked={m.isDone}/>
-                <span>{m.title}</span>
-                <button onClick={() => {
-                    removeTask(m.id)
-                }}>X
-                </button>
-            </li>)}
+            {tasks.map(m =>
+                <li><input type="checkbox"
+                           checked={m.isDone}/>
+                    <span>{m.title}</span>
+                    <button onClick={() => {
+                        removeTask(m.id)
+                    }}>X
+                    </button>
+                </li>)}
 
         </ul>
         <div>
-            <button onClick={()=>filterTask("All")}>All</button>
-            <button onClick={()=>filterTask("Active")}>Active</button>
-            <button onClick={()=>filterTask("Completed")}>Completed</button>
+            <button onClick={() => filterTask("All")}>All</button>
+            <button onClick={() => filterTask("Active")}>Active</button>
+            <button onClick={() => filterTask("Completed")}>Completed</button>
         </div>
     </div>
 }
