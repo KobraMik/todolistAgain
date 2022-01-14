@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
+import {Todolist, TaskType} from './Todolist';
 import {v1} from 'uuid';
 
 export type filterType = "All" | "Active" | "Completed"
@@ -8,6 +8,9 @@ export type TodolistsType = {
     id: string
     title: string
     filter: filterType
+}
+export type TasksStateType = {
+    [key: string] : Array<TaskType>
 }
 
 function App() {
@@ -28,7 +31,7 @@ function App() {
         {id: todolistID2, title: "What to buy", filter: "All"},
     ])
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -54,7 +57,7 @@ function App() {
 
     function removeTask(id: string, todolistID: string) {
         let todolistTasks = tasks[todolistID]
-        tasks[todolistID] = todolistTasks.filter(t=>t.id!== id);
+        tasks[todolistID] = todolistTasks.filter(t => t.id !== id);
         setTasks({...tasks})
     }
 
@@ -69,6 +72,13 @@ function App() {
         <div className="App">
             {
                 todolists.map(tl => {
+
+                    function deleteTodolist(todolistID: string) {
+                        setTodolists(todolists.filter(tl => tl.id !== todolistID))
+                        delete tasks[todolistID]
+                        setTasks({...tasks})
+                    }
+
                     let allTodolistTasks = tasks[tl.id];
                     let taskForTodolist = allTodolistTasks;
 
@@ -79,6 +89,7 @@ function App() {
                     if (tl.filter === 'Completed') {
                         taskForTodolist = allTodolistTasks.filter(f => f.isDone)
                     }
+
                     return <Todolist
                         key={tl.id}
                         id={tl.id}
@@ -89,6 +100,7 @@ function App() {
                         addTask={addTask}
                         changeCheked={changeCheked}
                         activeFilter={tl.filter}
+                        deleteTodolist={deleteTodolist}
                     />
                 })
             }

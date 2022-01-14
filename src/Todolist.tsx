@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {filterType} from "./App";
 import './App.css';
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
@@ -17,9 +17,20 @@ type PropsType = {
     changeCheked: (id: string, isDone: boolean, todolistID: string) => void
     activeFilter: filterType
     id: string
+    deleteTodolist: (id: string) => void
 }
 
-export function Todolist({title, tasks, removeTask, changeFilter, addTask, changeCheked, activeFilter, ...props}: PropsType) {
+export function Todolist({
+                             title,
+                             tasks,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             changeCheked,
+                             activeFilter,
+                             deleteTodolist,
+                             ...props
+                         }: PropsType) {
     let [error, setError] = useState<string | null>(null)
 
     function filterTask(value: filterType, todolistID: string) {
@@ -53,7 +64,12 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
     }
 
     return <div>
-        <h3>{title}</h3>
+        <h3>{title}
+            <button onClick={() => {
+                deleteTodolist(props.id)
+            }}>X
+            </button>
+        </h3>
         <div>
             <input className={error ? "error" : ""}
                    value={titleInput}
@@ -89,7 +105,8 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
 
         </ul>
         <div>
-            <button className={activeFilter === "All" ? "activeFilter" : ""} onClick={() => filterTask("All", props.id)}>All
+            <button className={activeFilter === "All" ? "activeFilter" : ""}
+                    onClick={() => filterTask("All", props.id)}>All
             </button>
             <button className={activeFilter === "Active" ? "activeFilter" : ""}
                     onClick={() => {
