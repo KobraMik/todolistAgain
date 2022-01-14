@@ -11,10 +11,10 @@ type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
+    removeTask: (id: string, todolistID: string) => void
     changeFilter: (value: filterType, todolistID: string) => void
-    addTask: (titleInput: string) => void
-    changeCheked: (id: string, isDone: boolean) => void
+    addTask: (titleInput: string, todolistID: string) => void
+    changeCheked: (id: string, isDone: boolean, todolistID: string) => void
     activeFilter: filterType
     id: string
 }
@@ -35,7 +35,7 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
 
     function addTaskHandler() {
         if (titleInput.trim() !== "") {
-            addTask(titleInput)
+            addTask(titleInput, props.id)
             setTitleInput("")
         } else {
             setError("This pole is required")
@@ -69,7 +69,7 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
             {tasks.map((m) => {
 
                 function changeChekedHandler(e: React.ChangeEvent<HTMLInputElement>) {
-                    changeCheked(m.id, e.currentTarget.checked)
+                    changeCheked(m.id, e.currentTarget.checked, props.id)
                 }
 
                 return (
@@ -81,7 +81,7 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
                         />
                         <span>{m.title}</span>
                         <button onClick={() => {
-                            removeTask(m.id)
+                            removeTask(m.id, props.id)
                         }}>X
                         </button>
                     </li>)
