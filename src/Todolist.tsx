@@ -1,27 +1,29 @@
 import React, {useState} from 'react';
 import {filterType} from "./App";
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
 
 type PropsType = {
+    id: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
-    filter: (value: filterType) => void
-    addTask: (titleInput: string) => void
-    changeCheked: (id: string, isDone: boolean) => void
-    activeFilter: filterType
+    removeTask: (id: string, todolistID: string) => void
+    changeFilter: (value: filterType, todolistID: string) => void
+    addTask: (titleInput: string, todolistID: string) => void
+    changeCheked: (id: string, isDone: boolean, todolistID: string) => void
+    filter: filterType
+    removeTodolist: (id: string) => void
 }
 
-export function Todolist({title, tasks, removeTask, filter, addTask, changeCheked, activeFilter, ...props}: PropsType) {
+export function Todolist({title, tasks, removeTask, changeFilter, addTask, changeCheked, filter, ...props}: PropsType) {
     let [error, setError] = useState<string | null>(null)
 
     function filterTask(value: filterType) {
-        filter(value)
+        changeFilter(value, props.id)
     }
 
     let [titleInput, setTitleInput] = useState('');
@@ -33,7 +35,7 @@ export function Todolist({title, tasks, removeTask, filter, addTask, changeCheke
 
     function addTaskHandler() {
         if (titleInput.trim() !== "") {
-            addTask(titleInput)
+            addTask(titleInput, props.id)
             setTitleInput("")
         } else {
             setError("This pole is required")
@@ -50,8 +52,10 @@ export function Todolist({title, tasks, removeTask, filter, addTask, changeCheke
         }
     }
 
+    function removeTodolist() {props.removeTodolist(props.id)}
+
     return <div>
-        <h3>{title}</h3>
+        <h3>{title} <button onClick={removeTodolist}>X</button></h3>
         <div>
             <input className={error ? "error" : ""}
                    value={titleInput}
@@ -67,17 +71,17 @@ export function Todolist({title, tasks, removeTask, filter, addTask, changeCheke
             {tasks.map((m) => {
 
                 function changeChekedHandler(e: React.ChangeEvent<HTMLInputElement>) {
-                    changeCheked(m.id, e.currentTarget.checked)
+                    changeCheked(m.id, e.currentTarget.checked, props.id)
                 }
 
                 return (
-                    <li><input type="checkbox"
+                    <li className={m.isDone ? "isDone" : ""}><input type="checkbox"
                                checked={m.isDone}
                                onChange={changeChekedHandler}
                     />
                         <span>{m.title}</span>
                         <button onClick={() => {
-                            removeTask(m.id)
+                            removeTask(m.id, props.id)
                         }}>X
                         </button>
                     </li>)
@@ -85,9 +89,9 @@ export function Todolist({title, tasks, removeTask, filter, addTask, changeCheke
 
         </ul>
         <div>
-            <button className={activeFilter === "All" ? "activeFilter": ""}  onClick={() => filterTask("All")}>All</button>
-            <button className={activeFilter === "Active" ? "activeFilter": ""} onClick={() => filterTask("Active")}>Active</button>
-            <button className={activeFilter === "Completed" ? "activeFilter": ""} onClick={() => filterTask("Completed")}>Completed</button>
+            <button className={filter === "All" ? "activeFilter": ""} onClick={() => filterTask("All")}>All</button>
+            <button className={filter === "Active" ? "activeFilter": ""} onClick={() => filterTask("Active")}>Active</button>
+            <button className={filter === "Completed" ? "activeFilter": ""} onClick={() => filterTask("Completed")}>Completed</button>
         </div>
     </div>
 }
