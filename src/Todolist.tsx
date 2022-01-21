@@ -1,6 +1,7 @@
 import React from 'react';
 import {filterType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -18,15 +19,18 @@ type PropsType = {
     changeCheked: (id: string, isDone: boolean, todolistID: string) => void
     filter: filterType
     removeTodolist: (id: string) => void
+    onChange: (taskID: string, input:string, todolistID:string)=>void
 }
 
 export function Todolist({title, tasks, removeTask, changeFilter, addTask, changeCheked, filter, ...props}: PropsType) {
     function filterTask(value: filterType) {
         changeFilter(value, props.id)
     }
+
     function removeTodolist() {
         props.removeTodolist(props.id)
     }
+
     function addTaskHandler(title: string) {
         addTask(title, props.id)
     }
@@ -43,13 +47,16 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
                 function changeChekedHandler(e: React.ChangeEvent<HTMLInputElement>) {
                     changeCheked(m.id, e.currentTarget.checked, props.id)
                 }
+                function onChangeEditableSpan(input: string) {
+                    props.onChange(m.id, input, props.id)
+                }
 
                 return (
                     <li className={m.isDone ? "isDone" : ""}><input type="checkbox"
                                                                     checked={m.isDone}
                                                                     onChange={changeChekedHandler}
                     />
-                        <span>{m.title}</span>
+                        <EditableSpan title={m.title} onChangeEditableSpan={onChangeEditableSpan}/>
                         <button onClick={() => {
                             removeTask(m.id, props.id)
                         }}>X

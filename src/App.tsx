@@ -65,16 +65,25 @@ function App() {
         }
     }
 
-    function removeTodolist (id: string) {
-        setTodolists(todolists.filter(f=>f.id !== id))
+    function removeTodolist(id: string) {
+        setTodolists(todolists.filter(f => f.id !== id))
         delete tasks[id]
         setTasks({...tasks})
     }
 
-    function addTodolist (title: string) {
-        let todolist:TodolistsType = {id: v1(), title: title, filter: "All"};
+    function addTodolist(title: string) {
+        let todolist: TodolistsType = {id: v1(), title: title, filter: "All"};
         setTodolists([todolist, ...todolists])
-        setTasks({[todolist.id]:[],...tasks})
+        setTasks({[todolist.id]: [], ...tasks})
+    }
+
+    function onChangeInput(taskID: string, input:string, todolistID:string) {
+        let todolistTask = tasks[todolistID];
+        let task = todolistTask.find (f => f.id === taskID);
+        if (task) {
+            task.title = input;
+            setTasks({...tasks})
+        }
     }
 
     return (
@@ -101,6 +110,7 @@ function App() {
                     changeCheked={changeCheked}
                     filter={tl.filter}
                     removeTodolist={removeTodolist}
+                    onChange={onChangeInput}
                 />)
             })}
 
