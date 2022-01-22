@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Button} from "@material-ui/core";
 
 type AddItemFormType = {
     addItem: (titleInput: string) => void
@@ -39,9 +40,8 @@ export function AddItemForm(props: AddItemFormType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
             />
-            <button onClick={onClickHandler}
-            >+
-            </button>
+            <Button onClick={onClickHandler} variant="contained" color="primary" size="small">+
+            </Button>
             {error ? <div className="error-message">{error}</div> : null}
         </div>
     )

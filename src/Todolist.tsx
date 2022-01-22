@@ -2,6 +2,8 @@ import React from 'react';
 import {filterType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {IconButton, Button,} from '@material-ui/core';
+import {Delete,} from '@material-ui/icons';
 
 export type TaskType = {
     id: string
@@ -19,7 +21,7 @@ type PropsType = {
     changeCheked: (id: string, isDone: boolean, todolistID: string) => void
     filter: filterType
     removeTodolist: (id: string) => void
-    onChange: (taskID: string, input:string, todolistID:string)=>void
+    onChange: (taskID: string, input: string, todolistID: string) => void
 }
 
 export function Todolist({title, tasks, removeTask, changeFilter, addTask, changeCheked, filter, ...props}: PropsType) {
@@ -38,7 +40,9 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
 
     return <div>
         <h3>{title}
-            <button onClick={removeTodolist}>X</button>
+            <IconButton aria-label="delete" onClick={removeTodolist}>
+                <Delete/>
+            </IconButton>
         </h3>
         <AddItemForm addItem={addTaskHandler}/>
         <ul>
@@ -47,6 +51,7 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
                 function changeChekedHandler(e: React.ChangeEvent<HTMLInputElement>) {
                     changeCheked(m.id, e.currentTarget.checked, props.id)
                 }
+
                 function onChangeEditableSpan(input: string) {
                     props.onChange(m.id, input, props.id)
                 }
@@ -57,11 +62,10 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
                                                                     onChange={changeChekedHandler}
                     />
                         <EditableSpan title={m.title} onChangeEditableSpan={onChangeEditableSpan}/>
-                        <button onClick={() => {
+                        <IconButton aria-label="delete" onClick={() => {
                             removeTask(m.id, props.id)
-                        }}>X
-                        </button>
-                    </li>)
+                        }} > <Delete/></IconButton>
+            </li>)
             })}
 
         </ul>
