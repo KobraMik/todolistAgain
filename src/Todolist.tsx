@@ -2,8 +2,8 @@ import React from 'react';
 import {filterType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton, Button,} from '@material-ui/core';
-import {Delete,} from '@material-ui/icons';
+import {IconButton, Button, Checkbox, Container, Grid,} from '@material-ui/core';
+import {Delete, FavoriteBorder, Favorite,} from '@material-ui/icons';
 
 export type TaskType = {
     id: string
@@ -57,26 +57,26 @@ export function Todolist({title, tasks, removeTask, changeFilter, addTask, chang
                 }
 
                 return (
-                    <li className={m.isDone ? "isDone" : ""}><input type="checkbox"
-                                                                    checked={m.isDone}
-                                                                    onChange={changeChekedHandler}
-                    />
+                    <li className={m.isDone ? "isDone" : ""}>
+                        <Checkbox icon={<FavoriteBorder/>} checkedIcon={<Favorite/>} checked={m.isDone}
+                                  onChange={changeChekedHandler}/>
+
                         <EditableSpan title={m.title} onChangeEditableSpan={onChangeEditableSpan}/>
                         <IconButton aria-label="delete" onClick={() => {
                             removeTask(m.id, props.id)
-                        }} > <Delete/></IconButton>
-            </li>)
+                        }}> <Delete/></IconButton>
+                    </li>)
             })}
 
         </ul>
-        <div>
-            <button className={filter === "All" ? "activeFilter" : ""} onClick={() => filterTask("All")}>All</button>
-            <button className={filter === "Active" ? "activeFilter" : ""} onClick={() => filterTask("Active")}>Active
-            </button>
-            <button className={filter === "Completed" ? "activeFilter" : ""}
-                    onClick={() => filterTask("Completed")}>Completed
-            </button>
-        </div>
+    <div>
+        <button className={filter === "All" ? "activeFilter" : ""} onClick={() => filterTask("All")}>All</button>
+        <button className={filter === "Active" ? "activeFilter" : ""} onClick={() => filterTask("Active")}>Active
+        </button>
+        <button className={filter === "Completed" ? "activeFilter" : ""}
+                onClick={() => filterTask("Completed")}>Completed
+        </button>
     </div>
+</div>
 }
 

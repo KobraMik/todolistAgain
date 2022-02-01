@@ -3,6 +3,8 @@ import './App.css';
 import {Todolist, TaskType} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
+import {AppBar, IconButton, Button, Typography, Toolbar, Box} from '@material-ui/core';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export type filterType = "All" | "Active" | "Completed"
 type TodolistsType = { id: string, title: string, filter: filterType }
@@ -77,9 +79,9 @@ function App() {
         setTasks({[todolist.id]: [], ...tasks})
     }
 
-    function onChangeInput(taskID: string, input:string, todolistID:string) {
+    function onChangeInput(taskID: string, input: string, todolistID: string) {
         let todolistTask = tasks[todolistID];
-        let task = todolistTask.find (f => f.id === taskID);
+        let task = todolistTask.find(f => f.id === taskID);
         if (task) {
             task.title = input;
             setTasks({...tasks})
