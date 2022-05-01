@@ -31,20 +31,19 @@ function AppWithRedux() {
 
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         dispatch(changeTodolistFilterAC(todolistId, value))
-    }, [])
+    }, [dispatch])
 
     const removeTodolist = useCallback((id: string) => {
         dispatch(removeTodolistAC(id))
-
-    }, [])
+    }, [dispatch])
 
     const changeTodolistTitle = useCallback((id: string, title: string) => {
         dispatch(changeTodolistTitleAC(id, title))
-    }, [])
+    }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -56,7 +55,7 @@ function AppWithRedux() {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit">Login</Button>ff
                 </Toolbar>
             </AppBar>
             <Container fixed>
