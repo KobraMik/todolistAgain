@@ -4,7 +4,7 @@ import {authAPI, LoginParamsType} from '../../api/todolists-api'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
 
 const initialState: InitialStateType = {
-    isLoggedIn: true
+    isLoggedIn: false
 }
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
