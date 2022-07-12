@@ -1,26 +1,17 @@
-/*
-.App {
+.app {
   padding: 30px;
+}
+.addTodolist {
   display: flex;
 }
-
-.App > div {
-  margin-right: 50px;
+.addTodolistTitle {
+  padding: 30px 10px 0 10px;
+}
+.allTodolists {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.error {
-  border: red 1px solid;
+.allTodolists > div {
+  margin-right: 30px;
 }
-
-.error-message {
-  color: red;
-}
-
-.active-filter {
-  background-color: aquamarine;
-}
-
-.is-done {
-  opacity: 0.5;
-}
-*/

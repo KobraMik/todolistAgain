@@ -1,0 +1,63 @@
+.todolist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 5px;
+    margin-bottom: 20px;
+    min-height: 550px;
+    width: 250px;
+    border: 1px solid lightgrey;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    max-width: 250px;
+}
+.taskInput {
+    margin: 10px 0;
+}
+.taskInput input {
+    width: 170px;
+    height: 10px;
+}
+
+.taskCheckbox {
+    opacity: .3;
+}
+
+.taskTitle {
+    width: 180px;
+}
+
+.error {
+    font-size: 12px;
+    margin-left: 3px;
+
+    color: red;
+}
+
+.arrayInputAddTasks {
+    border: 2px solid red;
+}
+
+.activeButton {
+    background-color: #ffd0db;
+}
+
+
+.todolistHeader {
+    display: flex;
+    justify-content: center;
+    background-color: #e9e9e9;
+}
+
+.todolistTitle {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    margin: 10px 0 15px 0;
+
+}
